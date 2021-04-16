@@ -1,0 +1,21 @@
+---
+- name: List all local yum repos
+  find:
+    paths: /etc/yum.repos.d/
+  register: yum_repos
+
+- name: Remove internet repos
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  when: "{{ 'local.repo' not in item.path }}"
+  with_items: "{{ yum_repos.files }}"
+
+- name: Setup local repo
+  copy:
+    src: local.repo
+    dest: /etc/yum.repos.d/local.repo
+    mode: "0644"
+
+- name: Cleanup repo info
+  shell: "yum clean all"

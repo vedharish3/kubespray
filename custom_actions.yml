@@ -1,0 +1,4 @@
+---
+- hosts: k8s-cluster:etcd
+  roles:
+    - { role: setup_package_manager, tags: [ 'role-setup_package_manager' ] }
