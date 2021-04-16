@@ -55,6 +55,9 @@
     common_required_pkgs: "{{ common_required_pkgs|default([]) + ['ipvsadm', 'ipset'] }}"
   when: kube_proxy_mode == 'ipvs'
 
+- debug:
+    msg: "QWEQWEQWE ---------- {{ common_required_pkgs }}"
+
 - name: Install packages requirements
   package:
     name: "{{ required_pkgs | default([]) | union(common_required_pkgs|default([])) }}"
