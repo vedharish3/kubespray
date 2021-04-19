@@ -4,12 +4,17 @@
     - { role: setup_package_manager, tags: [ 'role-setup_package_manager' ] }
 
 # Copies tar from provisioner to registry node
-- hosts: kube-node
+- hosts: kube-node:kube-control-plane
   tasks:
-    - name: Load conatiner image
+    - name: Load container image
       copy:
         src: "/tmp/registry.tar"
         dest: "/tmp/registry.tar"
+      tags:
+        - role-setup_private_registry
+
+    - name: Load registry container image on registry node
+      shell: "docker load -i /tmp/registry.tar"
       tags:
         - role-setup_private_registry
 
