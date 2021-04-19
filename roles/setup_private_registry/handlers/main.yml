@@ -1,0 +1,5 @@
+---
+name: Cleanup applied k8s object
+file:
+  path: "{{ apply_location }}"
+  state: absent

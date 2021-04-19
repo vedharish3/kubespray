@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: private-registry-pv
+spec:
+  capacity:
+    storage: {{ container_registry_storage }}
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: /opt/container_repository
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: private-registry-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ container_registry_storage }}

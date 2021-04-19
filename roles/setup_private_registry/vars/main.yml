@@ -1,0 +1,4 @@
+---
+apply_location: /tmp/kubernetes_apply.yml
+container_registry_storage: 10Gi
+container_cache_path: /tmp/

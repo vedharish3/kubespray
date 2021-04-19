@@ -1,0 +1,10 @@
+---
+- name: Deploy private registry secrets
+  template:
+    src: "{{ item }}"
+    dest: "{{ apply_location }}"
+  notify:
+    - Cleanup applied k8s object
+
+- name: Apply K8s config
+  shell: "/usr/local/bin/kubectl apply -f {{ apply_location }}"

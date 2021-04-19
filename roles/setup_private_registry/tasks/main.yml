@@ -3,11 +3,18 @@
   slurp:
     src: /opt/kubespray_state.json
   register: cluster_state
+  delegate_to: localhost
 
-- debug:
-    msg: "{{ cluster_state }}"
+- name: Set Facts for repo
+  set_fact:
+    registry_facts: "{{ (cluster_state['content'] | b64decode | from_json).docker_registry }}"
+
+- name: Load registry container image on registry node
+  shell: "docker load -i {{ container_cache_path }}/registry.tar"
 
 - name: Deploy private registry secrets
-  k8s:
-    state: present
-    template: registry_secrets.yaml.j2
+  include_tasks: apply_k8s_object.yml
+  with_items:
+    - registry_secrets.yaml.j2
+    - registry_pvc.yaml.j2
+    - registry_deployment.yaml.j2
