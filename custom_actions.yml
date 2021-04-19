@@ -2,3 +2,7 @@
 - hosts: k8s-cluster:etcd
   roles:
     - { role: setup_package_manager, tags: [ 'role-setup_package_manager' ] }
+
+- hosts: kube_control_plane[0]
+  roles:
+    - { role: setup_private_registry, tags: [ 'role-setup_private_registry' ] }

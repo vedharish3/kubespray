@@ -1,0 +1,13 @@
+---
+- name: Register Cluster State
+  slurp:
+    src: /opt/kubespray_state.json
+  register: cluster_state
+
+- debug:
+    msg: "{{ cluster_state }}"
+
+- name: Deploy private registry secrets
+  k8s:
+    state: present
+    template: registry_secrets.yaml.j2
