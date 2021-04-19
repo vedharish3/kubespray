@@ -8,8 +8,8 @@
   tasks:
     - name: Load conatiner image
       copy:
-        src: "{{ container_cache_path }}/registry.tar"
-        dest: "{{ container_cache_path }}/registry.tar"
+        src: "/tmp/registry.tar"
+        dest: "/tmp/registry.tar"
       tags:
         - role-setup_private_registry
 
